@@ -1,0 +1,22 @@
+# AppVeyor CI configuration for C++ (Visual Studio) project
+image: Visual Studio 2022
+
+# Сборка только для main (или master) ветки, можно убрать фильтр
+branches:
+  only:
+    - main
+    - master
+
+# Отключить автоматическую сборку .NET
+build_script:
+  - cmd: nuget restore androidUtils.sln
+  - cmd: msbuild androidUtils.sln /p:Configuration=Release /p:Platform=x86 /m
+
+# Публикация артефактов (DLL, EXE, LIB и т.д.)
+artifacts:
+  - path: '**/Release/*.dll'
+    name: dlls
+  - path: '**/Release/*.exe'
+    name: exes
+  - path: '**/Release/*.lib'
+    name: libs
