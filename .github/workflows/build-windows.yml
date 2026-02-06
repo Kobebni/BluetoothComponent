@@ -1,0 +1,31 @@
+name: Build Windows Solution
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Restore NuGet packages
+        run: nuget restore androidUtils.sln
+
+      - name: Build solution (Release|x86)
+        run: msbuild androidUtils.sln /p:Configuration=Release /p:Platform=x86 /m
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: androidUtils-build
+          path: |
+            **/bin/**/Release/**
+            android/**/app/build/outputs/**/*.apk

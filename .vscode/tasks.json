@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build androidUtils.sln",
+      "type": "shell",
+      "command": "msbuild",
+      "args": ["${workspaceFolder}/androidUtils.sln", "/p:Configuration=Release", "/p:Platform=x86"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}
